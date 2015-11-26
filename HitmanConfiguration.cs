@@ -12,7 +12,6 @@ namespace Freenex.Hitman
         public int DatabasePort;
 
         public decimal MinimumBounty;
-        public decimal DefaultPercentage;
 
         public void LoadDefaults()
         {
@@ -23,7 +22,6 @@ namespace Freenex.Hitman
             DatabaseTableName = "hitman";
             DatabasePort = 3306;
             MinimumBounty = 100;
-            DefaultPercentage = 85;
         }
     }
 }
