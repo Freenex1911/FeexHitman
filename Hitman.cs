@@ -21,17 +21,19 @@ namespace Freenex.Hitman
             get
             {
                 return new TranslationList(){
-                {"hitman_general_chat_created","Kopfgeld ausgesetzt: {0} ({1} €)"},
-                {"hitman_general_chat_increased","Kopfgeld um {1} € erhöht: {0} ({2} €)"},
-                {"hitman_general_chat_received","{0} hat {1} getötet und {2} € ({3} %) Kopfgeld erhalten."},
-                {"hitman_general_not_found","Spieler nicht gefunden."},
-                {"hitman_add_self","Du kannst dich nicht selber hinzufügen."},
-                {"hitman_add_amount","Dies ist kein gültiger Betrag."},
-                {"hitman_add_balance","Du besitzt nicht genug Geld um ein Kopfgeld auszusetzen."},
-                {"hitman_add_minimum","Das Kopfgeld muss mindestens {0} € betragen."},
-                {"hitman_payout","Das Kopfgeld von {0} wurde dir ausgezahlt. ({1} €)"},
-                {"hitman_check_true","Das Kopfgeld von {0} beträgt {1} €."},
-                {"hitman_check_false","Auf {0} ist kein Kopfgeld ausgesetzt."}
+                {"hitman_general_chat_created","Bounty placed: {0} ({1} $)"},
+                {"hitman_general_chat_increased","Bounty increased by {1} $: {0} ({2} $)"},
+                {"hitman_general_chat_received","{0} killed {1} and received the bounty of {2} $ ({3} %)."},
+                {"hitman_general_not_found","Player not found."},
+                {"hitman_add_self","You can't place bounty on yourself."},
+                {"hitman_add_amount","That's not a valid amount."},
+                {"hitman_add_balance","You do not have enough money to place a bounty."},
+                {"hitman_add_minimum","The bounty must be at least {0} $."},
+                {"hitman_payout","The bounty of {0} has been paid to you. ({1} $)."},
+                {"hitman_check_true","{0} has a bounty of {1} $."},
+                {"hitman_check_false","{0} has no bounty."},
+                {"hitman_list_true","{0} player/s have a bounty: {1}"},
+                {"hitman_list_false","The bounty list is empty."}
                 };
             }
         }

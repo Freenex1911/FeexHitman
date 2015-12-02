@@ -12,6 +12,7 @@ namespace Freenex.Hitman
         public int DatabasePort;
 
         public decimal MinimumBounty;
+        public decimal CommandListMaximum;
 
         public void LoadDefaults()
         {
@@ -22,6 +23,7 @@ namespace Freenex.Hitman
             DatabaseTableName = "hitman";
             DatabasePort = 3306;
             MinimumBounty = 100;
+            CommandListMaximum = 20;
         }
     }
 }

@@ -57,10 +57,62 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT `bounty` from `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
+                command.CommandText = "SELECT `bounty` FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
                 connection.Open();
                 object result = command.ExecuteScalar();
                 if (result != null) Decimal.TryParse(result.ToString(), out output);
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex);
+            }
+            return output;
+        }
+
+        public string GetBountyList()
+        {
+            System.Text.StringBuilder HitmanList = new System.Text.StringBuilder();
+            try
+            {
+                MySqlConnection connection = CreateConnection();
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM (SELECT * FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `lastUpdated` ORDER BY `lastUpdated` DESC LIMIT " + Hitman.Instance.Configuration.Instance.CommandListMaximum + ") AS tbl ORDER BY `lastUpdated` ASC";
+                connection.Open();
+                MySqlDataReader Reader = command.ExecuteReader();
+
+                bool firstPlayer = true;
+                while (Reader.Read())
+                {
+                    if (firstPlayer) { firstPlayer = false; }
+                    else { HitmanList.Append(", "); }
+
+                    HitmanList.Append(Reader.GetString(2));
+
+                    if (GetBountyCount() > Hitman.Instance.Configuration.Instance.CommandListMaximum) { HitmanList.Append(", [...]"); }
+                }
+                
+                Reader.Close();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Logger.LogException(ex);
+            }
+            return HitmanList.ToString();
+        }
+
+        public int GetBountyCount()
+        {
+            int output = 0;
+            try
+            {
+                MySqlConnection connection = CreateConnection();
+                MySqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT COUNT(*) FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "`";
+                connection.Open();
+                object result = command.ExecuteScalar();
+                if (result != null) int.TryParse(result.ToString(), out output);
                 connection.Close();
             }
             catch (Exception ex)

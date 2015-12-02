@@ -41,7 +41,8 @@ namespace Freenex.Hitman
                 {
                     "hitman.add",
                     "hitman.payout",
-                    "hitman.check"
+                    "hitman.check",
+                    "hitman.list"
                 };
             }
         }
@@ -137,6 +138,18 @@ namespace Freenex.Hitman
                 else
                 {
                     UnturnedChat.Say(caller, Hitman.Instance.Translations.Instance.Translate("hitman_check_false", otherPlayer.DisplayName));
+                }
+            }
+
+            if (command.Length == 1 && command[0] == "list" && caller.HasPermission("hitman.list"))
+            {
+                if (Hitman.Instance.HitmanDatabase.GetBountyCount() == 0)
+                {
+                    UnturnedChat.Say(caller, Hitman.Instance.Translations.Instance.Translate("hitman_list_false"));
+                }
+                else
+                {
+                    UnturnedChat.Say(caller, Hitman.Instance.Translations.Instance.Translate("hitman_list_true", Hitman.Instance.HitmanDatabase.GetBountyCount(), Hitman.Instance.HitmanDatabase.GetBountyList()));
                 }
             }
         }
