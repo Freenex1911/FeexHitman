@@ -32,7 +32,7 @@ namespace Freenex.Hitman
                 {"hitman_payout","The bounty of {0} has been paid to you. ({1} $)."},
                 {"hitman_check_true","{0} has a bounty of {1} $."},
                 {"hitman_check_false","{0} has no bounty."},
-                {"hitman_list_true","{0} player/s have a bounty: {1}"},
+                {"hitman_list_true","{0} player/s on bounty list: {1}"},
                 {"hitman_list_false","The bounty list is empty."}
                 };
             }
