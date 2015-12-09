@@ -85,7 +85,7 @@ namespace Freenex.Hitman
 
                     if (Hitman.Instance.HitmanDatabase.CheckExists(player.CSteamID))
                     {
-                        decimal amount = HitmanDatabase.GetBounty(player.CSteamID);
+                        decimal amount = Hitman.Instance.HitmanDatabase.GetBounty(player.CSteamID);
                         amount = System.Math.Round(amount * (BountyPercentage / 100), 2);
                         Uconomy.Instance.Database.IncreaseBalance(UPmurderer.Id, amount);
                         Hitman.Instance.HitmanDatabase.RemoveVictimAccount(player.CSteamID);
