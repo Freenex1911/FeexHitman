@@ -57,7 +57,7 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT `bounty` FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
+                command.CommandText = "SELECT `bounty` FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id + "'";
                 connection.Open();
                 object result = command.ExecuteScalar();
                 if (result != null) Decimal.TryParse(result.ToString(), out output);
