@@ -78,9 +78,9 @@ namespace Freenex.Hitman
                 if (playerPermission.ToLower().Contains("hitman.receive."))
                 {
                     string BountyPermission = playerPermission.Replace("hitman.receive.", string.Empty);
-                    uint BountyPercentage;
+                    decimal BountyPercentage;
 
-                    bool isPercentageNumeric = uint.TryParse(BountyPermission, out BountyPercentage);
+                    bool isPercentageNumeric = decimal.TryParse(BountyPermission, out BountyPercentage);
                     if (!isPercentageNumeric) { Logger.LogError(BountyPermission + " is not numeric."); return; }
 
                     if (Hitman.Instance.HitmanDatabase.CheckExists(player.CSteamID))
@@ -89,7 +89,7 @@ namespace Freenex.Hitman
                         amount = System.Math.Round(amount * (BountyPercentage / 100), 2);
                         Uconomy.Instance.Database.IncreaseBalance(UPmurderer.Id, amount);
                         Hitman.Instance.HitmanDatabase.RemoveVictimAccount(player.CSteamID);
-                        UnturnedChat.Say(Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount, BountyPercentage), UnityEngine.Color.yellow);
+                        UnturnedChat.Say(Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
                     }
                 }
             }
