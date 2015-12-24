@@ -18,11 +18,6 @@ namespace Freenex.Hitman
             get { return "Hitman (add/payout/check)"; }
         }
 
-        public bool AllowFromConsole
-        {
-            get { return false; }
-        }
-
         public string Syntax
         {
             get { return "<add/payout/check> [<player>] [<amount>]"; }
@@ -31,6 +26,11 @@ namespace Freenex.Hitman
         public List<string> Aliases
         {
             get { return new List<string>(); }
+        }
+
+        public AllowedCaller AllowedCaller
+        {
+            get { return AllowedCaller.Player; }
         }
 
         public List<string> Permissions
@@ -153,5 +153,6 @@ namespace Freenex.Hitman
                 }
             }
         }
+
     }
 }

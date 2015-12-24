@@ -72,25 +72,34 @@ namespace Freenex.Hitman
             }
             catch { return; }
 
+            decimal BountyPercentage = 0;
 
             foreach (string playerPermission in UPmurderer.GetPermissions())
             {
                 if (playerPermission.ToLower().Contains("hitman.receive."))
                 {
                     string BountyPermission = playerPermission.Replace("hitman.receive.", string.Empty);
-                    decimal BountyPercentage;
 
-                    bool isPercentageNumeric = decimal.TryParse(BountyPermission, out BountyPercentage);
+                    decimal BountyPercentagePermission;
+                    bool isPercentageNumeric = decimal.TryParse(BountyPermission, out BountyPercentagePermission);
                     if (!isPercentageNumeric) { Logger.LogError(BountyPermission + " is not numeric."); return; }
 
-                    if (Hitman.Instance.HitmanDatabase.CheckExists(player.CSteamID))
+                    if (BountyPercentagePermission > BountyPercentage)
                     {
-                        decimal amount = Hitman.Instance.HitmanDatabase.GetBounty(player.CSteamID);
-                        amount = System.Math.Round(amount * (BountyPercentage / 100), 2);
-                        Uconomy.Instance.Database.IncreaseBalance(UPmurderer.Id, amount);
-                        Hitman.Instance.HitmanDatabase.RemoveVictimAccount(player.CSteamID);
-                        UnturnedChat.Say(Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
+                        BountyPercentage = BountyPercentagePermission;
                     }
+                }
+            }
+
+            if (BountyPercentage != 0)
+            {
+                if (Hitman.Instance.HitmanDatabase.CheckExists(player.CSteamID))
+                {
+                    decimal amount = Hitman.Instance.HitmanDatabase.GetBounty(player.CSteamID);
+                    amount = System.Math.Round(amount * (BountyPercentage / 100), 2);
+                    Uconomy.Instance.Database.IncreaseBalance(UPmurderer.Id, amount);
+                    Hitman.Instance.HitmanDatabase.RemoveVictimAccount(player.CSteamID);
+                    UnturnedChat.Say(Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
                 }
             }
         }
