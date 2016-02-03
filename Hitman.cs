@@ -74,11 +74,11 @@ namespace Freenex.Hitman
 
             decimal BountyPercentage = 0;
 
-            foreach (string playerPermission in UPmurderer.GetPermissions())
+            foreach (Rocket.API.Serialisation.Permission playerPermission in UPmurderer.GetPermissions())
             {
-                if (playerPermission.ToLower().Contains("hitman.receive."))
+                if (playerPermission.Name.ToLower().Contains("hitman.receive."))
                 {
-                    string BountyPermission = playerPermission.Replace("hitman.receive.", string.Empty);
+                    string BountyPermission = playerPermission.Name.ToLower().Replace("hitman.receive.", string.Empty);
 
                     decimal BountyPercentagePermission;
                     bool isPercentageNumeric = decimal.TryParse(BountyPermission, out BountyPercentagePermission);
@@ -99,7 +99,10 @@ namespace Freenex.Hitman
                     amount = System.Math.Round(amount * (BountyPercentage / 100), 2);
                     Uconomy.Instance.Database.IncreaseBalance(UPmurderer.Id, amount);
                     Hitman.Instance.HitmanDatabase.RemoveVictimAccount(player.CSteamID);
-                    UnturnedChat.Say(Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
+                    if (Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received") != "hitman_general_chat_received")
+                    {
+                        UnturnedChat.Say(Hitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
+                    }
                 }
             }
         }
