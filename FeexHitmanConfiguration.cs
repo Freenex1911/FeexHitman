@@ -1,8 +1,8 @@
 ﻿using Rocket.API;
 
-namespace Freenex.Hitman
+namespace Freenex.FeexHitman
 {
-    public class HitmanConfiguration : IRocketPluginConfiguration
+    public class FeexHitmanConfiguration : IRocketPluginConfiguration
     {
         public string DatabaseAddress;
         public string DatabaseUsername;

@@ -2,7 +2,7 @@
 using Rocket.Core.Logging;
 using System;
 
-namespace Freenex.Hitman
+namespace Freenex.FeexHitman
 {
     public class DatabaseManager
     {
@@ -17,8 +17,8 @@ namespace Freenex.Hitman
             MySqlConnection connection = null;
             try
             {
-                if (Hitman.Instance.Configuration.Instance.DatabasePort == 0) Hitman.Instance.Configuration.Instance.DatabasePort = 3306;
-                connection = new MySqlConnection(String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};PORT={4};", Hitman.Instance.Configuration.Instance.DatabaseAddress, Hitman.Instance.Configuration.Instance.DatabaseName, Hitman.Instance.Configuration.Instance.DatabaseUsername, Hitman.Instance.Configuration.Instance.DatabasePassword, Hitman.Instance.Configuration.Instance.DatabasePort));
+                if (FeexHitman.Instance.Configuration.Instance.DatabasePort == 0) FeexHitman.Instance.Configuration.Instance.DatabasePort = 3306;
+                connection = new MySqlConnection(String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};PORT={4};", FeexHitman.Instance.Configuration.Instance.DatabaseAddress, FeexHitman.Instance.Configuration.Instance.DatabaseName, FeexHitman.Instance.Configuration.Instance.DatabaseUsername, FeexHitman.Instance.Configuration.Instance.DatabasePassword, FeexHitman.Instance.Configuration.Instance.DatabasePort));
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace Freenex.Hitman
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
                 int exists = 0;
-                command.CommandText = "SELECT COUNT(1) FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
+                command.CommandText = "SELECT COUNT(1) FROM `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
                 connection.Open();
                 object result = command.ExecuteScalar();
                 if (result != null) Int32.TryParse(result.ToString(), out exists);
@@ -57,7 +57,7 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT `bounty` FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
+                command.CommandText = "SELECT `bounty` FROM `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId` = '" + id.ToString() + "'";
                 connection.Open();
                 object result = command.ExecuteScalar();
                 if (result != null) Decimal.TryParse(result.ToString(), out output);
@@ -77,7 +77,7 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM (SELECT * FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `lastUpdated` ORDER BY `lastUpdated` DESC LIMIT " + Hitman.Instance.Configuration.Instance.CommandListMaximum + ") AS tbl ORDER BY `lastUpdated` ASC";
+                command.CommandText = "SELECT * FROM (SELECT * FROM `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `lastUpdated` ORDER BY `lastUpdated` DESC LIMIT " + FeexHitman.Instance.Configuration.Instance.CommandListMaximum + ") AS tbl ORDER BY `lastUpdated` ASC";
                 connection.Open();
                 MySqlDataReader Reader = command.ExecuteReader();
 
@@ -89,7 +89,7 @@ namespace Freenex.Hitman
 
                     HitmanList.Append(Reader.GetString(2));
 
-                    if (GetBountyCount() > Hitman.Instance.Configuration.Instance.CommandListMaximum) { HitmanList.Append(", [...]"); }
+                    if (GetBountyCount() > FeexHitman.Instance.Configuration.Instance.CommandListMaximum) { HitmanList.Append(", [...]"); }
                 }
                 
                 Reader.Close();
@@ -109,7 +109,7 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT COUNT(*) FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "`";
+                command.CommandText = "SELECT COUNT(*) FROM `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "`";
                 connection.Open();
                 object result = command.ExecuteScalar();
                 if (result != null) int.TryParse(result.ToString(), out output);
@@ -130,11 +130,11 @@ namespace Freenex.Hitman
                 MySqlCommand command = connection.CreateCommand();
                 if (CheckExists(id))
                 {
-                    command.CommandText = "UPDATE `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `bounty` = bounty + (" + bounty + "), `lastDisplayName` = '" + lastDisplayName + "',`lastUpdated` = NOW() WHERE `steamId` = '" + id.ToString() + "'";
+                    command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `bounty` = bounty + (" + bounty + "), `lastDisplayName` = '" + lastDisplayName + "',`lastUpdated` = NOW() WHERE `steamId` = '" + id.ToString() + "'";
                 }
                 else
                 {
-                    command.CommandText = "INSERT IGNORE INTO `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` (steamId,bounty,lastDisplayName,lastUpdated) VALUES('" + id.ToString() + "','" + bounty + "','" + lastDisplayName + "',NOW())";
+                    command.CommandText = "INSERT IGNORE INTO `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` (steamId,bounty,lastDisplayName,lastUpdated) VALUES('" + id.ToString() + "','" + bounty + "','" + lastDisplayName + "',NOW())";
                 }
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -152,7 +152,7 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "DELETE FROM `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId`='" + id.ToString() + "'";
+                command.CommandText = "DELETE FROM `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` WHERE `steamId`='" + id.ToString() + "'";
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -171,7 +171,7 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "UPDATE `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `lastDisplayName` = '" + lastDisplayName + "' WHERE `steamId` = '" + id.ToString() + "'";
+                command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `lastDisplayName` = '" + lastDisplayName + "' WHERE `steamId` = '" + id.ToString() + "'";
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -188,13 +188,13 @@ namespace Freenex.Hitman
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "SHOW TABLES LIKE '" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "'";
+                command.CommandText = "SHOW TABLES LIKE '" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "'";
                 connection.Open();
                 object test = command.ExecuteScalar();
 
                 if (test == null)
                 {
-                    command.CommandText = "CREATE TABLE `" + Hitman.Instance.Configuration.Instance.DatabaseTableName + "` (`steamId` varchar(32) NOT NULL,`bounty` decimal(15,2) NOT NULL DEFAULT '25.00',`lastDisplayName` varchar(32) NOT NULL,`lastUpdated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',PRIMARY KEY (`steamId`)) ";
+                    command.CommandText = "CREATE TABLE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` (`steamId` varchar(32) NOT NULL,`bounty` decimal(15,2) NOT NULL DEFAULT '25.00',`lastDisplayName` varchar(32) NOT NULL,`lastUpdated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',PRIMARY KEY (`steamId`)) ";
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
