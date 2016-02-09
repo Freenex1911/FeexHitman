@@ -116,6 +116,13 @@ namespace Freenex.FeexHitman
                 Uconomy.Instance.Database.IncreaseBalance(caller.Id.ToString(), -bounty);
                 FeexHitman.Instance.HitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
             }
+            else
+            {
+                if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_invalid_parameter") != "hitman_general_invalid_parameter")
+                {
+                    UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_general_invalid_parameter"));
+                }
+            }
         }
 
     }

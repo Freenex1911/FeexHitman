@@ -119,8 +119,7 @@ namespace Freenex.FeexHitman
                 Uconomy.Instance.Database.IncreaseBalance(caller.Id.ToString(), -bounty);
                 FeexHitman.Instance.HitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
             }
-
-            if (command.Length == 2 && command[0] == "payout" && caller.HasPermission("hitman.payout"))
+            else if (command.Length == 2 && command[0] == "payout" && caller.HasPermission("hitman.payout"))
             {
                 UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[1]);
 
@@ -151,8 +150,7 @@ namespace Freenex.FeexHitman
                     }
                 }
             }
-
-            if (command.Length == 2 && command[0] == "check" && caller.HasPermission("hitman.check"))
+            else if (command.Length == 2 && command[0] == "check" && caller.HasPermission("hitman.check"))
             {
                 UnturnedPlayer otherPlayer = UnturnedPlayer.FromName(command[1]);
 
@@ -180,8 +178,7 @@ namespace Freenex.FeexHitman
                     }
                 }
             }
-
-            if (command.Length == 1 && command[0] == "list" && caller.HasPermission("hitman.list"))
+            else if (command.Length == 1 && command[0] == "list" && caller.HasPermission("hitman.list"))
             {
                 if (FeexHitman.Instance.HitmanDatabase.GetBountyCount() == 0)
                 {
@@ -196,6 +193,13 @@ namespace Freenex.FeexHitman
                     {
                         UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_list_true", FeexHitman.Instance.HitmanDatabase.GetBountyCount(), FeexHitman.Instance.HitmanDatabase.GetBountyList()));
                     }
+                }
+            }
+            else
+            {
+                if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_invalid_parameter") != "hitman_general_invalid_parameter")
+                {
+                    UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_general_invalid_parameter"));
                 }
             }
         }

@@ -25,6 +25,7 @@ namespace Freenex.FeexHitman
                 {"hitman_general_chat_increased","Bounty increased by {1} $: {0} ({2} $)"},
                 {"hitman_general_chat_received","{0} killed {1} and received the bounty of {2} $ ({3} %)."},
                 {"hitman_general_not_found","Player not found."},
+                {"hitman_general_invalid_parameter","Invalid parameter."},
                 {"hitman_add_self","You can't place bounty on yourself."},
                 {"hitman_add_amount","That's not a valid amount."},
                 {"hitman_add_balance","You do not have enough money to place a bounty."},
