@@ -101,11 +101,11 @@ namespace Freenex.FeexHitman
                     return;
                 }
 
-                if (FeexHitman.Instance.HitmanDatabase.CheckExists(otherPlayer.CSteamID))
+                if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(otherPlayer.CSteamID))
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased") != "hitman_general_chat_increased")
                     {
-                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased", otherPlayer.DisplayName, bounty, Convert.ToDecimal(FeexHitman.Instance.HitmanDatabase.GetBounty(otherPlayer.CSteamID)) + bounty), UnityEngine.Color.yellow);
+                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased", otherPlayer.DisplayName, bounty, Convert.ToDecimal(FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)) + bounty), UnityEngine.Color.yellow);
                     }
                 }
                 else
@@ -117,7 +117,7 @@ namespace Freenex.FeexHitman
                 }
 
                 Uconomy.Instance.Database.IncreaseBalance(caller.Id.ToString(), -bounty);
-                FeexHitman.Instance.HitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
+                FeexHitman.Instance.FeexHitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
             }
             else if (command.Length == 2 && command[0] == "payout" && caller.HasPermission("hitman.payout"))
             {
@@ -132,11 +132,11 @@ namespace Freenex.FeexHitman
                     return;
                 }
 
-                if (FeexHitman.Instance.HitmanDatabase.CheckExists(otherPlayer.CSteamID))
+                if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(otherPlayer.CSteamID))
                 {
-                    decimal bounty = FeexHitman.Instance.HitmanDatabase.GetBounty(otherPlayer.CSteamID);
+                    decimal bounty = FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID);
                     Uconomy.Instance.Database.IncreaseBalance(caller.Id, bounty);
-                    FeexHitman.Instance.HitmanDatabase.RemoveVictimAccount(otherPlayer.CSteamID);
+                    FeexHitman.Instance.FeexHitmanDatabase.RemoveVictimAccount(otherPlayer.CSteamID);
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_payout") != "hitman_payout")
                     {
                         UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_payout", otherPlayer.DisplayName, bounty));
@@ -163,11 +163,11 @@ namespace Freenex.FeexHitman
                     return;
                 }
 
-                if (FeexHitman.Instance.HitmanDatabase.CheckExists(otherPlayer.CSteamID))
+                if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(otherPlayer.CSteamID))
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_check_true") != "hitman_check_true")
                     {
-                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_true", otherPlayer.DisplayName, FeexHitman.Instance.HitmanDatabase.GetBounty(otherPlayer.CSteamID)));
+                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_true", otherPlayer.DisplayName, FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)));
                     }
                 }
                 else
@@ -180,7 +180,7 @@ namespace Freenex.FeexHitman
             }
             else if (command.Length == 1 && command[0] == "list" && caller.HasPermission("hitman.list"))
             {
-                if (FeexHitman.Instance.HitmanDatabase.GetBountyCount() == 0)
+                if (FeexHitman.Instance.FeexHitmanDatabase.GetBountyCount() == 0)
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_list_false") != "hitman_list_false")
                     {
@@ -191,7 +191,7 @@ namespace Freenex.FeexHitman
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_list_true") != "hitman_list_true")
                     {
-                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_list_true", FeexHitman.Instance.HitmanDatabase.GetBountyCount(), FeexHitman.Instance.HitmanDatabase.GetBountyList()));
+                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_list_true", FeexHitman.Instance.FeexHitmanDatabase.GetBountyCount(), FeexHitman.Instance.FeexHitmanDatabase.GetBountyList()));
                     }
                 }
             }

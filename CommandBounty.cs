@@ -98,11 +98,11 @@ namespace Freenex.FeexHitman
                     return;
                 }
 
-                if (FeexHitman.Instance.HitmanDatabase.CheckExists(otherPlayer.CSteamID))
+                if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(otherPlayer.CSteamID))
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased") != "hitman_general_chat_increased")
                     {
-                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased", otherPlayer.DisplayName, bounty, Convert.ToDecimal(FeexHitman.Instance.HitmanDatabase.GetBounty(otherPlayer.CSteamID)) + bounty), UnityEngine.Color.yellow);
+                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased", otherPlayer.DisplayName, bounty, Convert.ToDecimal(FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)) + bounty), UnityEngine.Color.yellow);
                     }
                 }
                 else
@@ -114,7 +114,7 @@ namespace Freenex.FeexHitman
                 }
 
                 Uconomy.Instance.Database.IncreaseBalance(caller.Id.ToString(), -bounty);
-                FeexHitman.Instance.HitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
+                FeexHitman.Instance.FeexHitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
             }
             else
             {

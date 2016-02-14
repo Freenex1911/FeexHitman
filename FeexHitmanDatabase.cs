@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using fr34kyn01535.Uconomy;
+using MySql.Data.MySqlClient;
 using Rocket.Core.Logging;
 using System;
 
@@ -17,8 +18,8 @@ namespace Freenex.FeexHitman
             MySqlConnection connection = null;
             try
             {
-                if (FeexHitman.Instance.Configuration.Instance.DatabasePort == 0) FeexHitman.Instance.Configuration.Instance.DatabasePort = 3306;
-                connection = new MySqlConnection(String.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};PORT={4};", FeexHitman.Instance.Configuration.Instance.DatabaseAddress, FeexHitman.Instance.Configuration.Instance.DatabaseName, FeexHitman.Instance.Configuration.Instance.DatabaseUsername, FeexHitman.Instance.Configuration.Instance.DatabasePassword, FeexHitman.Instance.Configuration.Instance.DatabasePort));
+                if (Uconomy.Instance.Configuration.Instance.DatabasePort == 0) Uconomy.Instance.Configuration.Instance.DatabasePort = 3306;
+                connection = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PASSWORD={3};PORT={4};", Uconomy.Instance.Configuration.Instance.DatabaseAddress, Uconomy.Instance.Configuration.Instance.DatabaseName, Uconomy.Instance.Configuration.Instance.DatabaseUsername, Uconomy.Instance.Configuration.Instance.DatabasePassword, Uconomy.Instance.Configuration.Instance.DatabasePort));
             }
             catch (Exception ex)
             {
@@ -130,7 +131,7 @@ namespace Freenex.FeexHitman
                 MySqlCommand command = connection.CreateCommand();
                 if (CheckExists(id))
                 {
-                    command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `bounty` = bounty + (" + bounty + "), `lastDisplayName` = '" + lastDisplayName + "',`lastUpdated` = NOW() WHERE `steamId` = '" + id.ToString() + "'";
+                    command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `bounty` = bounty + (" + bounty + "), `lastDisplayName` = '" + lastDisplayName + "', `lastUpdated` = NOW() WHERE `steamId` = '" + id.ToString() + "'";
                 }
                 else
                 {
@@ -194,7 +195,7 @@ namespace Freenex.FeexHitman
 
                 if (test == null)
                 {
-                    command.CommandText = "CREATE TABLE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` (`steamId` varchar(32) NOT NULL,`bounty` decimal(15,2) NOT NULL DEFAULT '25.00',`lastDisplayName` varchar(32) NOT NULL,`lastUpdated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',PRIMARY KEY (`steamId`)) ";
+                    command.CommandText = "CREATE TABLE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` (`steamId` varchar(32) NOT NULL, `bounty` decimal(15,2) NOT NULL DEFAULT '25.00', `lastDisplayName` varchar(32) NOT NULL, `lastUpdated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',PRIMARY KEY (`steamId`))";
                     command.ExecuteNonQuery();
                 }
                 connection.Close();

@@ -13,7 +13,7 @@ namespace Freenex.FeexHitman
 {
     public class FeexHitman : RocketPlugin<FeexHitmanConfiguration>
     {
-        public DatabaseManager HitmanDatabase;
+        public DatabaseManager FeexHitmanDatabase;
         public static FeexHitman Instance;
 
         public override TranslationList DefaultTranslations
@@ -42,7 +42,7 @@ namespace Freenex.FeexHitman
         protected override void Load()
         {
             Instance = this;
-            HitmanDatabase = new DatabaseManager();
+            FeexHitmanDatabase = new DatabaseManager();
             U.Events.OnPlayerConnected += Events_OnPlayerConnected;
             UnturnedPlayerEvents.OnPlayerDeath += UnturnedPlayerEvents_OnPlayerDeath;
             Logger.Log("Freenex's FeexHitman has been loaded!");
@@ -57,9 +57,9 @@ namespace Freenex.FeexHitman
 
         private void Events_OnPlayerConnected(UnturnedPlayer player)
         {
-            if (FeexHitman.Instance.HitmanDatabase.CheckExists(player.CSteamID))
+            if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(player.CSteamID))
             {
-                FeexHitman.Instance.HitmanDatabase.UpdateVictimDisplayName(player.CSteamID, player.DisplayName);
+                FeexHitman.Instance.FeexHitmanDatabase.UpdateVictimDisplayName(player.CSteamID, player.DisplayName);
             }
         }
 
@@ -94,12 +94,12 @@ namespace Freenex.FeexHitman
 
             if (BountyPercentage != 0)
             {
-                if (FeexHitman.Instance.HitmanDatabase.CheckExists(player.CSteamID))
+                if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(player.CSteamID))
                 {
-                    decimal amount = FeexHitman.Instance.HitmanDatabase.GetBounty(player.CSteamID);
+                    decimal amount = FeexHitman.Instance.FeexHitmanDatabase.GetBounty(player.CSteamID);
                     amount = System.Math.Round(amount * (BountyPercentage / 100), 2);
                     Uconomy.Instance.Database.IncreaseBalance(UPmurderer.Id, amount);
-                    FeexHitman.Instance.HitmanDatabase.RemoveVictimAccount(player.CSteamID);
+                    FeexHitman.Instance.FeexHitmanDatabase.RemoveVictimAccount(player.CSteamID);
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_received") != "hitman_general_chat_received")
                     {
                         UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
