@@ -1,6 +1,7 @@
 ﻿using fr34kyn01535.Uconomy;
 using MySql.Data.MySqlClient;
 using Rocket.Core.Logging;
+using Steamworks;
 using System;
 
 namespace Freenex.FeexHitman
@@ -28,7 +29,7 @@ namespace Freenex.FeexHitman
             return connection;
         }
 
-        public bool CheckExists(Steamworks.CSteamID id)
+        public bool CheckExists(CSteamID id)
         {
             try
             {
@@ -51,7 +52,7 @@ namespace Freenex.FeexHitman
             }
         }
 
-        public decimal GetBounty(Steamworks.CSteamID id)
+        public decimal GetBounty(CSteamID id)
         {
             decimal output = 0;
             try
@@ -123,7 +124,7 @@ namespace Freenex.FeexHitman
             return output;
         }
 
-        public void AddUpdateVictimAccount(Steamworks.CSteamID id, decimal bounty, string lastDisplayName)
+        public void AddUpdateVictimAccount(CSteamID id, decimal bounty, string lastDisplayName)
         {
             try
             {
@@ -131,12 +132,13 @@ namespace Freenex.FeexHitman
                 MySqlCommand command = connection.CreateCommand();
                 if (CheckExists(id))
                 {
-                    command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `bounty` = bounty + (" + bounty + "), `lastDisplayName` = '" + lastDisplayName + "', `lastUpdated` = NOW() WHERE `steamId` = '" + id.ToString() + "'";
+                    command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `bounty` = bounty + (" + bounty + "), `lastDisplayName` = @lastDisplayName, `lastUpdated` = NOW() WHERE `steamId` = '" + id.ToString() + "'";
                 }
                 else
                 {
-                    command.CommandText = "INSERT IGNORE INTO `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` (steamId,bounty,lastDisplayName,lastUpdated) VALUES('" + id.ToString() + "','" + bounty + "','" + lastDisplayName + "',NOW())";
+                    command.CommandText = "INSERT IGNORE INTO `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` (steamId,bounty,lastDisplayName,lastUpdated) VALUES('" + id.ToString() + "','" + bounty + "',@lastDisplayName,NOW())";
                 }
+                command.Parameters.AddWithValue("@lastDisplayName", lastDisplayName);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -147,7 +149,7 @@ namespace Freenex.FeexHitman
             }
         }
 
-        public bool RemoveVictimAccount(Steamworks.CSteamID id)
+        public bool RemoveVictimAccount(CSteamID id)
         {
             try
             {
@@ -166,13 +168,14 @@ namespace Freenex.FeexHitman
             }
         }
 
-        public void UpdateVictimDisplayName(Steamworks.CSteamID id, string lastDisplayName)
+        public void UpdateVictimDisplayName(CSteamID id, string lastDisplayName)
         {
             try
             {
                 MySqlConnection connection = CreateConnection();
                 MySqlCommand command = connection.CreateCommand();
-                command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `lastDisplayName` = '" + lastDisplayName + "' WHERE `steamId` = '" + id.ToString() + "'";
+                command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.DatabaseTableName + "` SET `lastDisplayName` = @lastDisplayName WHERE `steamId` = '" + id.ToString() + "'";
+                command.Parameters.AddWithValue("@lastDisplayName", lastDisplayName);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
