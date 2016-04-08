@@ -139,7 +139,8 @@ namespace Freenex.FeexHitman
                 }
                 command.Parameters.AddWithValue("@lastDisplayName", lastDisplayName);
                 connection.Open();
-                command.ExecuteNonQuery();
+                IAsyncResult result = command.BeginExecuteNonQuery();
+                command.EndExecuteNonQuery(result);
                 connection.Close();
             }
             catch (Exception ex)
@@ -156,7 +157,8 @@ namespace Freenex.FeexHitman
                 MySqlCommand command = connection.CreateCommand();
                 command.CommandText = "DELETE FROM `" + FeexHitman.Instance.Configuration.Instance.FeexHitmanDatabase.DatabaseTableName + "` WHERE `steamId`='" + id.ToString() + "'";
                 connection.Open();
-                command.ExecuteNonQuery();
+                IAsyncResult result = command.BeginExecuteNonQuery();
+                command.EndExecuteNonQuery(result);
                 connection.Close();
                 return true;
             }
@@ -176,7 +178,8 @@ namespace Freenex.FeexHitman
                 command.CommandText = "UPDATE `" + FeexHitman.Instance.Configuration.Instance.FeexHitmanDatabase.DatabaseTableName + "` SET `lastDisplayName` = @lastDisplayName WHERE `steamId` = '" + id.ToString() + "'";
                 command.Parameters.AddWithValue("@lastDisplayName", lastDisplayName);
                 connection.Open();
-                command.ExecuteNonQuery();
+                IAsyncResult result = command.BeginExecuteNonQuery();
+                command.EndExecuteNonQuery(result);
                 connection.Close();
             }
             catch (Exception ex)
