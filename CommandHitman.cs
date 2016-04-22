@@ -203,6 +203,5 @@ namespace Freenex.FeexHitman
                 }
             }
         }
-
     }
 }

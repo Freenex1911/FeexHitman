@@ -124,6 +124,5 @@ namespace Freenex.FeexHitman
                 }
             }
         }
-
     }
 }
