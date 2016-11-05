@@ -105,19 +105,19 @@ namespace Freenex.FeexHitman
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased") != "hitman_general_chat_increased")
                     {
-                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased", otherPlayer.DisplayName, bounty, Convert.ToDecimal(FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)) + bounty), UnityEngine.Color.yellow);
+                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_increased", otherPlayer.CharacterName, bounty, Convert.ToDecimal(FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)) + bounty), UnityEngine.Color.yellow);
                     }
                 }
                 else
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_created") != "hitman_general_chat_created")
                     {
-                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_created", otherPlayer.DisplayName, bounty), UnityEngine.Color.yellow);
+                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_created", otherPlayer.CharacterName, bounty), UnityEngine.Color.yellow);
                     }
                 }
 
                 Uconomy.Instance.Database.IncreaseBalance(caller.Id.ToString(), -bounty);
-                FeexHitman.Instance.FeexHitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.DisplayName);
+                FeexHitman.Instance.FeexHitmanDatabase.AddUpdateVictimAccount(otherPlayer.CSteamID, bounty, otherPlayer.CharacterName);
             }
             else if (command.Length == 2 && command[0] == "payout" && caller.HasPermission("hitman.payout"))
             {
@@ -139,14 +139,14 @@ namespace Freenex.FeexHitman
                     FeexHitman.Instance.FeexHitmanDatabase.RemoveVictimAccount(otherPlayer.CSteamID);
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_payout") != "hitman_payout")
                     {
-                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_payout", otherPlayer.DisplayName, bounty));
+                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_payout", otherPlayer.CharacterName, bounty));
                     }
                 }
                 else
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_check_false") != "hitman_check_false")
                     {
-                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_false", otherPlayer.DisplayName));
+                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_false", otherPlayer.CharacterName));
                     }
                 }
             }
@@ -167,14 +167,14 @@ namespace Freenex.FeexHitman
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_check_true") != "hitman_check_true")
                     {
-                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_true", otherPlayer.DisplayName, FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)));
+                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_true", otherPlayer.CharacterName, FeexHitman.Instance.FeexHitmanDatabase.GetBounty(otherPlayer.CSteamID)));
                     }
                 }
                 else
                 {
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_check_false") != "hitman_check_false")
                     {
-                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_false", otherPlayer.DisplayName));
+                        UnturnedChat.Say(caller, FeexHitman.Instance.Translations.Instance.Translate("hitman_check_false", otherPlayer.CharacterName));
                     }
                 }
             }

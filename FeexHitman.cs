@@ -59,7 +59,7 @@ namespace Freenex.FeexHitman
         {
             if (FeexHitman.Instance.FeexHitmanDatabase.CheckExists(player.CSteamID))
             {
-                FeexHitman.Instance.FeexHitmanDatabase.UpdateVictimDisplayName(player.CSteamID, player.DisplayName);
+                FeexHitman.Instance.FeexHitmanDatabase.UpdateVictimDisplayName(player.CSteamID, player.CharacterName);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Freenex.FeexHitman
                     FeexHitman.Instance.FeexHitmanDatabase.RemoveVictimAccount(player.CSteamID);
                     if (FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_received") != "hitman_general_chat_received")
                     {
-                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.DisplayName, player.DisplayName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
+                        UnturnedChat.Say(FeexHitman.Instance.Translations.Instance.Translate("hitman_general_chat_received", UPmurderer.CharacterName, player.CharacterName, amount.ToString(), BountyPercentage), UnityEngine.Color.yellow);
                     }
                 }
             }
