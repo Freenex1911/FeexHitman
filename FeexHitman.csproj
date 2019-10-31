@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Freenex.FeexHitman</RootNamespace>
     <AssemblyName>FeexHitman</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -95,9 +95,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="classDatabase.cs" />
     <Compile Include="CommandBounty.cs" />
     <Compile Include="CommandHitman.cs" />
-    <Compile Include="FeexHitmanDatabase.cs" />
+    <Compile Include="DatabaseManager.cs" />
     <Compile Include="FeexHitmanConfiguration.cs" />
     <Compile Include="FeexHitman.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
