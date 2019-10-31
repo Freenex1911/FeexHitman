@@ -12,7 +12,7 @@ namespace Freenex.FeexHitman
         {
             FeexHitmanDatabase = new classDatabase()
             {
-                DatabaseAddress = "localhost",
+                DatabaseAddress = "127.0.0.1",
                 DatabaseUsername = "unturned",
                 DatabasePassword = "password",
                 DatabaseName = "unturned",
@@ -23,16 +23,5 @@ namespace Freenex.FeexHitman
             MinimumBounty = 100;
             CommandListMaximum = 20;
         }
-    }
-
-    public class classDatabase
-    {
-        public string DatabaseAddress;
-        public string DatabaseUsername;
-        public string DatabasePassword;
-        public string DatabaseName;
-        public string DatabaseTableName;
-        public string DatabaseViewName;
-        public int DatabasePort;
     }
 }
